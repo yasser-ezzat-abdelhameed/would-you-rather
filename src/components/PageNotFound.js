@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default props => (
+const PageNotFound = () => (
   <div className="card">
     <div className="card-header">Page Not Found</div>
     <div className="card-body">
@@ -10,3 +10,5 @@ export default props => (
     </div>
   </div>
 )
+
+export default PageNotFound
