@@ -1,13 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
-const LeaderBoard = props => {
-  const medals = [
-    'https://image.flaticon.com/icons/png/512/625/625394.png',
-    'https://image.flaticon.com/icons/png/512/625/625395.png',
-    'https://image.flaticon.com/icons/png/512/625/625396.png'
-  ]
-  return (
+const medals = [
+  'https://image.flaticon.com/icons/png/512/625/625394.png',
+  'https://image.flaticon.com/icons/png/512/625/625395.png',
+  'https://image.flaticon.com/icons/png/512/625/625396.png'
+]
+
+const LeaderBoard = props => (
   <div>
     {
       props.users.map((user, index) => (
@@ -37,7 +38,6 @@ const LeaderBoard = props => {
                       <p>Created questions</p>
                       <p>{user.askedQuestions}</p>
                     </div>
-
                   </div>
                 </div>
               </div>
@@ -61,9 +61,8 @@ const LeaderBoard = props => {
       ))
     }
   </div>
-  
-  )
-}
+)
+
 const mapStateToProps = state => {
   let users = { ...state.users }
   users = Object.keys(users).map(userId => {
@@ -78,11 +77,20 @@ const mapStateToProps = state => {
       score,
       askedQuestions,
       answeredQuestions
-    } 
+    }
   }).sort((a, b) => b.score - a.score).splice(0, 3)
   return {
     users
   }
 }
 
-export default connect(mapStateToProps)(LeaderBoard)
+LeaderBoard.propTypes = {
+  users: PropTypes.array.isRequired
+}
+
+/**
+ * LeaderBoard component
+ */
+const LeaderBoardComponent = connect(mapStateToProps)(LeaderBoard)
+
+export default LeaderBoardComponent

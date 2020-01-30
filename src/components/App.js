@@ -1,40 +1,35 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import LoadingBar from 'react-redux-loading'
 import Auth from './Auth/Auth'
 import Header from './Header'
 import Main from './Main'
 
-class App extends Component {
-  render() {
-    const { authedUser } = this.props
-    return (
-      <BrowserRouter>
-        <div className="app-container">
-          <Header />
-          <LoadingBar />
-          <div className="page-container">
-            <div className="page">
-              {
-                authedUser ? (
-                  <Main />
-                ) : (
-                  <Auth />
-                )
-              }
-            </div>
-          </div>
+const App = ({ authedUser }) => (
+  <BrowserRouter>
+    <div className="app-container">
+      <Header />
+      <LoadingBar />
+      <div className="page-container">
+        <div className="page">
+          { authedUser ? <Main /> : <Auth /> }
         </div>
-      </BrowserRouter>
-    );
-  }
+      </div>
+    </div>
+  </BrowserRouter>
+)
+
+const mapStateToProps = ({ authedUser }) => ({ authedUser })
+
+App.propTypes = {
+  authedUser: PropTypes.object
 }
 
-const mapStateToProps = state => {
-  return {
-    authedUser: state.authedUser
-  }
-}
+/**
+ * App component
+ */
+const AppComponent = connect(mapStateToProps)(App)
 
-export default connect(mapStateToProps)(App);
+export default AppComponent

@@ -65,4 +65,9 @@ NewQuestion.propTypes = {
   dispatch: PropTypes.func.isRequired,
 }
 
-export default connect(mapStateToProps)(NewQuestion)
+/**
+ * NewQuestion component
+ */
+const NewQuestionComponent = connect(mapStateToProps)(NewQuestion)
+
+export default NewQuestionComponent

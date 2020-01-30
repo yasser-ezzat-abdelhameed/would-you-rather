@@ -1,6 +1,10 @@
 import { useState } from 'react'
 
-const useFormInput = (initialValue) => {
+/**
+ * useFormInput custom hook
+ * @param {string} initialValue 
+ */
+const useFormInput = initialValue => {
   const [value, setValue] = useState(initialValue)
   const handleChange = (e) => {
     setValue(e.target.value)

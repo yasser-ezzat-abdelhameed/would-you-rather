@@ -1,5 +1,8 @@
 import React from 'react'
 
+/**
+ * PageNotFound component
+ */
 const PageNotFound = () => (
   <div className="card">
     <div className="card-header">Page Not Found</div>
