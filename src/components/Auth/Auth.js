@@ -1,32 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Login from './Login'
 import SignUp from './SignUp'
 
-class Auth extends React.Component {
-  state = {
-    authPage: "login"
+/**
+ * Auth component
+ */
+const Auth = () => {
+  const [authPage, setAuthPage] = useState("login")
+
+  const toggleAuthPage = () => {
+    setAuthPage(authPage === "login" ? "signup" : "login")
   }
 
-  toggleAuthPage = () => {
-    this.setState(prevState => ({
-      ...prevState,
-      authPage: prevState.authPage === "login" ? "signup" : "login"
-    }))
-  }
-
-  render() {
-    return (
-      <div>
-      {
-        this.state.authPage === "login" ? (
-          <Login switchToSignUp={this.toggleAuthPage}/>
-        ) : (
-          <SignUp switchToLogin={this.toggleAuthPage}/>
-        )
-      }
-      </div>
-    )
-  }
+  return (
+    <div>
+    {
+      authPage === "login" ? (
+        <Login switchToSignUp={toggleAuthPage}/>
+      ) : (
+        <SignUp switchToLogin={toggleAuthPage}/>
+      )
+    }
+    </div>
+  )
 }
 
 export default Auth
