@@ -1,4 +1,4 @@
-import { showLoading, hideLoading } from 'react-redux-loading'
+import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import { _getUsers, _signup } from '../utils/_DATA'
 
 export const RECEIVE_USERS = "RECEIVE_USERS"

@@ -1,4 +1,4 @@
-import { showLoading, hideLoading } from 'react-redux-loading'
+import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import { _getQuestions, _saveQuestionAnswer, _saveQuestion } from '../utils/_DATA'
 import { handleReceiveData } from './shared'
 import { setAuthedUser } from './authedUser'
