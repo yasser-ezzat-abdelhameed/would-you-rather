@@ -11,8 +11,17 @@ const Header = props => {
     const currentPage = location.pathname.replace('/', '') || "home"
     props.dispatch(setCurrentPage(currentPage))
   }, [])
+
+  const handleMenuItemClick = (val, e) => {
+    if (val === "logout") {
+      props.dispatch(setAuthedUser(null))
+    }
+    else {
+      props.dispatch(setCurrentPage(val))
+    }
+  }
   
-  const { authedUser, currentPage, dispatch } = props
+  const { authedUser, currentPage } = props
   return (
     <div className="header">
       <div className="header-content">
@@ -21,7 +30,7 @@ const Header = props => {
             <Link 
               className={"header-nav-item" + (currentPage === "home" ? " active" : "")} 
               to="/"
-              onClick={() => dispatch(setCurrentPage("home")) }
+              onClick={handleMenuItemClick.bind(this, "home")}
             >
               Home
             </Link>
@@ -30,7 +39,7 @@ const Header = props => {
             <Link 
               className={"header-nav-item" + (currentPage === "add" ? " active" : "")} 
               to="/add"
-              onClick={() => dispatch(setCurrentPage("add")) }
+              onClick={handleMenuItemClick.bind(this, "add")}
             >
               New Question
             </Link>
@@ -39,7 +48,7 @@ const Header = props => {
             <Link 
               className={"header-nav-item" + (currentPage === "leaderboard" ? " active" : "")} 
               to="/leaderboard"
-              onClick={() => dispatch(setCurrentPage("leaderboard")) }
+              onClick={handleMenuItemClick.bind(this, "leaderboard")}
             >
               Leader Board
             </Link>
@@ -53,7 +62,7 @@ const Header = props => {
                 <div className="avatar-container avatar-container-small" style={{ backgroundImage: `url("${authedUser.avatarURL}")` }}>
                 </div>
               </div>
-              <div className="header-logout-button" onClick={() => dispatch(setAuthedUser(null))}>Logout</div>
+              <div className="header-logout-button" onClick={handleMenuItemClick.bind(this, "logout")}>Logout</div>
             </div>
           ) : null
         }
