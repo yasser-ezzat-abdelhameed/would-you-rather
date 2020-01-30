@@ -1,53 +1,54 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import QuestionListItem from './QuestionListItem'
 
-class Home extends React.Component {
-  state = {
-    activeTab: "unanswered-questions"
+const Home = ({ users, questions, unansweredQuestions, answeredQuestions, isLoading }) => {
+  const [activeTab, setActiveTab] = useState("unanswered-questions")
+
+  const handleTabClick = (val) => {
+    setActiveTab(val)
   }
-  render() {
-    const { activeTab } = this.state
-    const { users, questions, unansweredQuestions, answeredQuestions, isLoading } = this.props
-    if (isLoading) return <p>Loading...</p>
-    return (
-      <div className="card">
-        <div className="tabs">
-          <div 
-            className={"tab" + (activeTab === "unanswered-questions" ? " active-tab" : " inactive-tab")}
-            disabled={activeTab === "unanswered-questions"}
-            onClick={() => this.setState({ activeTab: "unanswered-questions" })}
-          >Unanswered Questions</div>
-          <div 
-            className={"tab" + (activeTab === "answered-questions" ? " active-tab" : " inactive-tab")}
-            disabled={activeTab === "answered-questions"}
-            onClick={() => this.setState({ activeTab: "answered-questions" })}
-          >Answered Questions</div>
-        </div>
-        <div className="questions-list">
-          {
-            activeTab === "unanswered-questions" ? (
-              unansweredQuestions.length ? (
-                unansweredQuestions.map(questionId => (
-                  <QuestionListItem key={questionId} question={questions[questionId]} user={users[questions[questionId].author]} />
-                ))
-              ) : (
-                <p className="center">You have answered all questions</p>
-              )
-            ) : (
-              answeredQuestions.length ? (
-                answeredQuestions.map(questionId => (
-                  <QuestionListItem key={questionId} question={questions[questionId]} user={users[questions[questionId].author]} />
-                ))
-              ) : (
-                <p className="center">You have not answered any questions yet</p>
-              )
-            )
-          }
-        </div>
+
+  if (isLoading) return <p>Loading...</p>
+  
+  return (
+    <div className="card">
+      <div className="tabs">
+        <div 
+          className={"tab" + (activeTab === "unanswered-questions" ? " active-tab" : " inactive-tab")}
+          disabled={activeTab === "unanswered-questions"}
+          onClick={handleTabClick.bind(this, "unanswered-questions")}
+        >Unanswered Questions</div>
+        <div 
+          className={"tab" + (activeTab === "answered-questions" ? " active-tab" : " inactive-tab")}
+          disabled={activeTab === "answered-questions"}
+          onClick={handleTabClick.bind(this, "answered-questions")}
+        >Answered Questions</div>
       </div>
-    )
-  }
+      <div className="questions-list">
+        {
+          activeTab === "unanswered-questions" ? (
+            unansweredQuestions.length ? (
+              unansweredQuestions.map(questionId => (
+                <QuestionListItem key={questionId} question={questions[questionId]} user={users[questions[questionId].author]} />
+              ))
+            ) : (
+              <p className="center">You have answered all questions</p>
+            )
+          ) : (
+            answeredQuestions.length ? (
+              answeredQuestions.map(questionId => (
+                <QuestionListItem key={questionId} question={questions[questionId]} user={users[questions[questionId].author]} />
+              ))
+            ) : (
+              <p className="center">You have not answered any questions yet</p>
+            )
+          )
+        }
+      </div>
+    </div>
+  )
 }
 
 const mapStateToProps = state => {
@@ -66,4 +67,17 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(Home)
+Home.propTypes = {
+  users: PropTypes.object.isRequired,
+  questions: PropTypes.object.isRequired,
+  unansweredQuestions: PropTypes.array.isRequired,
+  answeredQuestions: PropTypes.array.isRequired,
+  isLoading: PropTypes.number.isRequired
+}
+
+/**
+ * Home component
+ */
+const HomeComponent = connect(mapStateToProps)(Home)
+
+export default HomeComponent

@@ -1,18 +1,30 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import ResultItem from './ResultItem'
 
-export default props => (
+/**
+ * AnsweredQuestionContent component
+ */
+const AnsweredQuestionContent = ({ optionOne, optionTwo, authedUserId }) => (
   <div>
     <h2>Results:</h2>
     <ResultItem 
-      text={props.optionOne.text}
-      optionVotesCount={props.optionOne.votes.length} 
-      totalVotesCount={props.optionOne.votes.length + props.optionTwo.votes.length} 
-      isYourVote={props.optionOne.votes.some(userId => userId === props.authedUserId)} />
+      text={optionOne.text}
+      optionVotesCount={optionOne.votes.length} 
+      totalVotesCount={optionOne.votes.length + optionTwo.votes.length} 
+      isYourVote={optionOne.votes.some(userId => userId === authedUserId)} />
     <ResultItem 
-      text={props.optionTwo.text}
-      optionVotesCount={props.optionTwo.votes.length} 
-      totalVotesCount={props.optionOne.votes.length + props.optionTwo.votes.length} 
-      isYourVote={props.optionTwo.votes.some(userId => userId === props.authedUserId)} />
+      text={optionTwo.text}
+      optionVotesCount={optionTwo.votes.length} 
+      totalVotesCount={optionOne.votes.length + optionTwo.votes.length} 
+      isYourVote={optionTwo.votes.some(userId => userId === authedUserId)} />
   </div>
 )
+
+AnsweredQuestionContent.propTypes = {
+  authedUserId: PropTypes.string.isRequired,
+  optionOne: PropTypes.object.isRequired,
+  optionTwo: PropTypes.object.isRequired
+}
+
+export default AnsweredQuestionContent

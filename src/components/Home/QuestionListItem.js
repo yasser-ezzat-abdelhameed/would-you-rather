@@ -1,7 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
-export default ({ question, user }) => (
+/**
+ * QuestionListItem component
+ */
+const QuestionListItem =  ({ question, user }) => (
   <div className="card question-list-item">
     <div className="card-header flex-start">{user.name} asks:</div>
     <div className="card-body">
@@ -25,3 +29,10 @@ export default ({ question, user }) => (
     </div>
   </div>
 )
+
+QuestionListItem.propTypes = {
+  question: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired
+}
+
+export default QuestionListItem
